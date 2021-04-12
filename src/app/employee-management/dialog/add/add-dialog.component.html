@@ -1,0 +1,61 @@
+<form mat-dialog-content [formGroup]="formGroup">
+    <h2>Thêm mới nhân viên</h2>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Tên nhân viên</mat-label>
+            <input matInput placeholder="Tên nhân viên" [(ngModel)]="data.name" formControlName="name">
+            <mat-error *ngIf="formGroup.get('name')?.hasError('required'); then thenBlock1 else elseBlock1"></mat-error>
+            <ng-template #thenBlock1><mat-error>Tên nhân viên không được để trống!</mat-error></ng-template>
+            <ng-template #elseBlock1><mat-error>Tên nhân viên không được chứa ký tự đặc biệt!</mat-error></ng-template>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Mã nhân viên</mat-label>
+            <input matInput placeholder="Mã nhân viên" [(ngModel)]="data.code" formControlName="code">
+            <mat-error *ngIf="formGroup.get('code')?.hasError('required'); then thenBlock2 else elseBlock2"></mat-error>
+            <ng-template #thenBlock2><mat-error>Mã nhân viên không được để trống!</mat-error></ng-template>
+            <ng-template #elseBlock2><mat-error>Mã nhân viên không được chứa ký tự đặc biệt!</mat-error></ng-template>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Địa chỉ</mat-label>
+            <input matInput placeholder="Địa chỉ" [(ngModel)]="data.address" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Ngày sinh</mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="data.dob" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-error *ngIf="formGroup.get('date')?.hasError('required'); then thenBlock3 else elseBlock3"></mat-error>
+            <ng-template #thenBlock3><mat-error>Ngày sinh không được để trống!</mat-error></ng-template>
+            <ng-template #elseBlock3><mat-error>Ngày sinh không hợp lệ!</mat-error></ng-template>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" [(ngModel)]="data.email" formControlName="email">
+            <mat-error *ngIf="formGroup.get('email')?.hasError('required'); then thenBlock4 else elseBlock4"></mat-error>
+            <ng-template #thenBlock4><mat-error>Email không được để trống!</mat-error></ng-template>
+            <ng-template #elseBlock4><mat-error>Email không hợp lệ!</mat-error></ng-template>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="inputImage">Chọn hình ảnh</label>
+        <input id="inputImage" placeholder="Hình ảnh" type="file" (change)="onUpload($event)">
+    </div>
+    <div>
+        <mat-error *ngIf="!data.image; then thenBlock5"></mat-error>
+        <ng-template #thenBlock5><mat-error>Vui lòng chọn hình ảnh!</mat-error></ng-template>
+        <img [src]="data.image" alt="Image Upload" id="imageUpload" *ngIf="data.image">
+        <button mat-button (click)="onClear()" *ngIf="data.image">Xóa</button>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onConfirm()" cdkFocusInitial [disabled]="confirmBtn">Xác nhận</button>
+        <button mat-button (click)="onCancel()">Hủy bỏ</button>
+    </div>
+</form>
