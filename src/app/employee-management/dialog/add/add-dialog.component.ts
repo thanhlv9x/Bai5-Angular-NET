@@ -89,7 +89,9 @@ export class AddDialogComponent {
             reader.onload = function (e) {
                 data.image = e.target?.result;
                 let imgTag: any = document.getElementById('imageUpload');
-                imgTag.src = e.target?.result;
+                try {
+                    imgTag.src = e.target?.result;
+                } catch (error) {}
             }
 
             reader.readAsDataURL(input.files[0]);
